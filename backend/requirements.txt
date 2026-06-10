@@ -21,3 +21,4 @@ langchain>=0.1.0
 
 # Dependencies for Testing and Utilities
 requests>=2.31.0
+gunicorn==23.0.0
