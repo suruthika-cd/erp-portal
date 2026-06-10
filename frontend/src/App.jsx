@@ -5,7 +5,7 @@ import * as icons from 'lucide-react';
 
 import './App.css';
 
-const API_BASE = 'https://erp-portal-new.onrender.com';
+const API_BASE = 'https://erp-portal-2-4gqh.onrender.com';
 
 // --- Login Component ---
 function Login({ onLogin }) {
