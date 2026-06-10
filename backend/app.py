@@ -8,11 +8,11 @@ from bson import ObjectId
 import werkzeug.utils
 import datetime
 import uuid
-import chromadb
+#import chromadb
 from pypdf import PdfReader
 from docx import Document as DocxDocument
-from sentence_transformers import SentenceTransformer
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+#from sentence_transformers import SentenceTransformer
+#from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -41,16 +41,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 chroma_collection = None
 embedder = None
-
-try:
-    print("Initializing ChromaDB...")
-    chroma_client = chromadb.PersistentClient(path="./chroma_db")
-    chroma_collection = chroma_client.get_or_create_collection(name="study_materials")
-    print("Initializing SentenceTransformer...")
-    embedder = SentenceTransformer('all-MiniLM-L6-v2')
-    print("ChromaDB and Embedder ready")
-except Exception as e:
-    print(f"CRITICAL: ChromaDB/Embedder initialization failed: {str(e)}")
 
 def serialize_doc(doc):
     if doc and '_id' in doc:
@@ -537,6 +527,8 @@ Question:
     except Exception as e:
         print(f"CRITICAL ERROR in RAG Assistant: {str(e)}")
         return jsonify({"success": False, "reply": f"Internal Error: {str(e)}"})
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(
+        host='0.0.0.0',
+        port=int(os.environ.get('PORT', 5000))
+    )
